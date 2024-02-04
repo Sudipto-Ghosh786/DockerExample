@@ -8,5 +8,21 @@
 </head>
 <body>
     <h1>Hello, World!</h1>
+    
+    <!-- Button to open Beyond Compare -->
+    <button onclick="openBeyondCompare()">Open Beyond Compare</button>
+
+    <script>
+        function openBeyondCompare() {
+            // Specify the path to Beyond Compare executable
+            var beyondComparePath = "C:\\Program Files (x86)\\Beyond Compare 3\\BCompare.exe";
+            
+            // Create an ActiveXObject for executing external applications (Windows only)
+            var shell = new ActiveXObject("WScript.Shell");
+
+            // Run Beyond Compare
+            shell.Run("\"" + beyondComparePath + "\"");
+        }
+    </script>
 </body>
 </html>
