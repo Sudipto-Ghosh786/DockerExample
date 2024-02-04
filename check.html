@@ -24,13 +24,19 @@ public class YourController {
     }
 }
 
-
 FROM openjdk:11-jre-slim
 
 WORKDIR /usr/src/app
 
 # Install X11 dependencies
-RUN apt-get update && apt-get install -y libxrender1 libxtst6 libxi6
+RUN apt-get update && apt-get install -y \
+    libxrender1 \
+    libxtst6 \
+    libxi6 \
+    libgtk2.0-0 \
+    libnss3 \
+    libgconf-2-4 \
+    libasound2
 
 COPY target/your-application.jar .
 
