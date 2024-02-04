@@ -1,28 +1,26 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
-</head>
-<body>
-    <h1>Hello, World!</h1>
-    
-    <!-- Button to open Beyond Compare -->
-    <button onclick="openBeyondCompare()">Open Beyond Compare</button>
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-    <script>
-        function openBeyondCompare() {
-            // Specify the path to Beyond Compare executable
-            var beyondComparePath = "C:\\Program Files (x86)\\Beyond Compare 3\\BCompare.exe";
-            
-            // Create an ActiveXObject for executing external applications (Windows only)
-            var shell = new ActiveXObject("WScript.Shell");
+@RestController
+public class OpenBeyondCompareController {
 
-            // Run Beyond Compare
-            shell.Run("\"" + beyondComparePath + "\"");
+    @GetMapping("/api/openBeyondCompare")
+    public String openBeyondCompare() {
+        // Specify the path to Beyond Compare executable
+        String beyondComparePath = "C:\\Program Files (x86)\\Beyond Compare 3\\BCompare.exe";
+
+        try {
+            // Execute a command to open Beyond Compare
+            ProcessBuilder processBuilder = new ProcessBuilder(beyondComparePath);
+            Process process = processBuilder.start();
+
+            // Wait for the process to complete (you might want to handle this differently)
+            process.waitFor();
+
+            return "{\"status\": \"success\"}";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "{\"status\": \"error\", \"message\": \"" + e.getMessage() + "\"}";
         }
-    </script>
-</body>
-</html>
+    }
+}
