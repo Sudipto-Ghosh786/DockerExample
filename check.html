@@ -1,26 +1,45 @@
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
+
 @RestController
-public class OpenBeyondCompareController {
+public class YourController {
 
-    @GetMapping("/api/openBeyondCompare")
+    @GetMapping("/openBeyondCompare")
     public String openBeyondCompare() {
-        // Specify the path to Beyond Compare executable
-        String beyondComparePath = "C:\\Program Files (x86)\\Beyond Compare 3\\BCompare.exe";
-
         try {
-            // Execute a command to open Beyond Compare
-            ProcessBuilder processBuilder = new ProcessBuilder(beyondComparePath);
-            Process process = processBuilder.start();
+            // Specify the file or URL you want to open with Beyond Compare
+            String fileToOpen = "/path/to/your/file.txt";
 
-            // Wait for the process to complete (you might want to handle this differently)
-            process.waitFor();
+            // Use 'xdg-open' which is a standard command for opening files with the default application
+            ProcessBuilder processBuilder = new ProcessBuilder("xdg-open", fileToOpen);
+            processBuilder.start();
 
-            return "{\"status\": \"success\"}";
-        } catch (Exception e) {
+            return "Beyond Compare opened successfully!";
+        } catch (IOException e) {
             e.printStackTrace();
-            return "{\"status\": \"error\", \"message\": \"" + e.getMessage() + "\"}";
+            return "Error opening Beyond Compare: " + e.getMessage();
         }
     }
 }
+
+
+FROM openjdk:11-jre-slim
+
+WORKDIR /usr/src/app
+
+# Install X11 dependencies
+RUN apt-get update && apt-get install -y libxrender1 libxtst6 libxi6
+
+COPY target/your-application.jar .
+
+# Expose the default X11 display
+ENV DISPLAY=:0
+
+CMD ["java", "-jar", "your-application.jar"]
+
+
+
+docker build -t your-image-name .
+docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -p 8080:8080 your-image-name
