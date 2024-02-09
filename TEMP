@@ -1,0 +1,35 @@
+What is 413 error ?
+
+A 413 error, also known as "Request Entity Too Large," occurs when the size of the data being 
+sent in a request exceeds the maximum limit that the server is willing or able to process. 
+This limit is typically set by the server configuration or by the API endpoint itself.
+
+
+What's that in Spring Boot ?
+In a Spring Boot application, a 413 error would typically be thrown by default if the size 
+of the HTTP request exceeds the maximum limit configured in the server or 
+in the Spring Boot application itself.
+
+Default Values of each embedded servers.
+
+1. Tomcat: The default maximum size for HTTP POST request body in Tomcat is 2MB.
+2. Jetty: The default maximum size for HTTP POST request body in Jetty is 200KB.
+3. Undertow: The default maximum size for HTTP POST request body in Undertow is unlimited.
+
+Ways to solve: 
+
+1. Here are the properties to adjust the maximum request size for each servlet container:
+    a) For Tomcat: server.tomcat.max-http-form-post-size
+    b) For Jetty: server.jetty.max-http-post-size
+    c) For Undertow: server.undertow.max-http-post-size
+Example:
+server.tomcat.max-http-form-post-size=5MB
+Here,
+server.tomcat.max-swallow-size=XMB //maximum size of the request body/payload
+server.tomcat.max-http-post-size=XMB //maximum size of entire POST request
+
+2. Optimize Data Size: Review the data being sent with the request and see if it can be optimized. 
+For example, compressing data before sending it over the network can reduce its size.
+3. Chunked Transfer Encoding.
+4. Streaming: Instead of loading the entire request body into memory, stream the data directly to disk or process it incrementally. 
+
