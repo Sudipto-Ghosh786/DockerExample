@@ -49,3 +49,140 @@ CMD ["java", "-jar", "your-application.jar"]
 
 docker build -t your-image-name .
 docker run -it --rm -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -p 8080:8080 your-image-name
+
+
+
+
+// Shape.java
+package com.example.shapes.model;
+
+public interface Shape {
+    double calculateArea();
+}
+
+// Rectangle.java
+package com.example.shapes.model;
+
+public class Rectangle implements Shape {
+    private double width;
+    private double height;
+
+    public Rectangle(double width, double height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    @Override
+    public double calculateArea() {
+        return width * height;
+    }
+}
+
+// Circle.java
+package com.example.shapes.model;
+
+public class Circle implements Shape {
+    private double radius;
+
+    public Circle(double radius) {
+        this.radius = radius;
+    }
+
+    @Override
+    public double calculateArea() {
+        return Math.PI * radius * radius;
+    }
+}
+
+// Square.java
+package com.example.shapes.model;
+
+public class Square implements Shape {
+    private double side;
+
+    public Square(double side) {
+        this.side = side;
+    }
+
+    @Override
+    public double calculateArea() {
+        return side * side;
+    }
+}
+
+// ShapeService.java
+package com.example.shapes.service;
+
+import com.example.shapes.model.Shape;
+
+public interface ShapeService {
+    double getArea(Shape shape);
+}
+
+// ShapeServiceImpl.java
+package com.example.shapes.service;
+
+import com.example.shapes.model.Shape;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ShapeServiceImpl implements ShapeService {
+    @Override
+    public double getArea(Shape shape) {
+        return shape.calculateArea();
+    }
+}
+
+// ShapeController.java
+package com.example.shapes.controller;
+
+import com.example.shapes.model.Shape;
+import com.example.shapes.service.ShapeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/shapes")
+public class ShapeController {
+    private final ShapeService shapeService;
+
+    @Autowired
+    public ShapeController(ShapeService shapeService) {
+        this.shapeService = shapeService;
+    }
+
+    @PostMapping("/rectangle")
+    public ResponseEntity<Double> calculateRectangleArea(@RequestParam double width, @RequestParam double height) {
+        Shape rectangle = new Rectangle(width, height);
+        return ResponseEntity.ok(shapeService.getArea(rectangle));
+    }
+
+    @PostMapping("/circle")
+    public ResponseEntity<Double> calculateCircleArea(@RequestParam double radius) {
+        Shape circle = new Circle(radius);
+        return ResponseEntity.ok(shapeService.getArea(circle));
+    }
+
+    @PostMapping("/square")
+    public ResponseEntity<Double> calculateSquareArea(@RequestParam double side) {
+        Shape square = new Square(side);
+        return ResponseEntity.ok(shapeService.getArea(square));
+    }
+}
+
+// ShapesApplication.java
+package com.example.shapes;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class ShapesApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ShapesApplication.class, args);
+    }
+}
+
+
+
