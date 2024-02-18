@@ -1,0 +1,38 @@
+openapi: 3.0.0
+info:
+  title: Random OpenAPI 3 Spec
+  version: 1.0.0
+  description: A randomly generated OpenAPI 3 specification
+paths:
+  /example:
+    get:
+      summary: Example endpoint
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExampleResponse'
+components:
+  schemas:
+    ExampleResponse:
+      type: object
+      properties:
+        result:
+          oneOf:
+            - $ref: '#/components/schemas/Success'
+            - $ref: '#/components/schemas/Error'
+    Success:
+      type: object
+      properties:
+        successMessage:
+          type: string
+          example: Success!
+    Error:
+      type: object
+      properties:
+        errorMessage:
+          type: string
+          example: Error occurred!
+          
