@@ -48,3 +48,126 @@ $(document).ready(function() {
     }
   });
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Month Popup</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<button id="popupButton">Show Months</button>
+
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <ul id="monthsList"></ul>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+
+
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fefefe;
+  padding: 20px;
+  border: 1px solid #888;
+  z-index: 1;
+}
+
+.popup-content {
+  text-align: center;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
+
+$(document).ready(function() {
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const popup = $('#popup');
+  const popupButton = $('#popupButton');
+  const closeBtn = $('.close');
+  const monthsList = $('#monthsList');
+
+  popupButton.click(function() {
+    popup.css('display', 'block');
+    popup.css({
+      'top': '50%',
+      'left': '50%',
+      'transform': 'translate(-50%, -50%)'
+    });
+    monthsList.empty();
+    $.each(months, function(index, month) {
+      monthsList.append('<li>' + month + '</li>');
+    });
+  });
+
+  closeBtn.click(function() {
+    popup.css('display', 'none');
+  });
+
+  $(document).click(function(event) {
+    if (!popup.is(event.target) && popup.has(event.target).length === 0) {
+      popup.css('display', 'none');
+    }
+  });
+});
