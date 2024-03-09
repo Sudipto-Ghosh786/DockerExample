@@ -1,16 +1,50 @@
-const dummyData = {
-    "post":["/pets"],
-    "get":["/pets","/pets/{petId}"]
-};
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Month Popup</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
 
-<li class="dropdown-menu-item">
-    <input type="checkbox" id="cppCheckBox" name="cppCheckBox" value="C++">
-    <label for="cppCheckBox">
-        <p class="method-name-box">
-            [POST]
-        </p>
-        <p class="path-name-box">
-            /api/v1/pokemon/user/find/all{user-id}
-        </p>
-    </label>
-</li>
+<button id="popupButton">Show Months</button>
+
+<div id="popup" class="popup">
+  <div class="popup-content">
+    <span class="close">&times;</span>
+    <ul id="monthsList"></ul>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
+
+
+$(document).ready(function() {
+  const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const popup = $('#popup');
+  const popupButton = $('#popupButton');
+  const closeBtn = $('.close');
+  const monthsList = $('#monthsList');
+
+  popupButton.click(function() {
+    popup.css('display', 'block');
+    monthsList.empty();
+    $.each(months, function(index, month) {
+      monthsList.append('<li>' + month + '</li>');
+    });
+  });
+
+  closeBtn.click(function() {
+    popup.css('display', 'none');
+  });
+
+  $(window).click(function(event) {
+    if (event.target === popup[0]) {
+      popup.css('display', 'none');
+    }
+  });
+});
