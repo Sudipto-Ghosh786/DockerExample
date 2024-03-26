@@ -1,0 +1,17 @@
+- User stories describe features from the perspective of end-users, providing details on who the feature is intended for, what functionality it will deliver, why it matters, and the value it brings to the user.
+- It's essential for teams to break down user stories into smaller, manageable pieces to facilitate efficient development and delivery.
+- Utilizing a prioritized backlog of small user stories enables teams to receive valuable feedback at frequent intervals, ensuring continuous improvement.
+- Vertical slicing involves delivering small increments of a feature, allowing users to experience the system gradually. This contrasts with horizontal slicing, where the entire feature must be completed before user feedback can be obtained.
+- An analogy often used is slicing a cake: 
+  - Vertical slicing means giving users a tiny piece of the whole cake, allowing them to taste various layers concurrently. This approach facilitates early feedback and reduces the risk of delivering an undesired product.
+  - Horizontal slicing, on the other hand, involves delivering one layer at a time. This method extends the feedback loop, increasing the risk of delivering a product that doesn't meet user expectations until the entire feature is completed.
+- The SPIDR technique aids in splitting user stories effectively:
+  - "S" represents splitting paths, where separate stories are created for different user paths or scenarios within a feature.
+  - "P" represents splitting by interface, breaking down stories based on different platforms or browsers.
+  - "I" represents splitting by interface type, such as mobile, desktop, or web, to address specific user needs.
+  - "D" represents splitting by data, allowing stories to be divided based on the type of data and parameters they handle.
+  - "R" represents splitting by rules, dividing stories based on explicit or implicit business rules involved.
+- Spikes are valuable for prototyping new functionalities or evaluating the feasibility of using new technologies. They involve investigation and knowledge-building to inform development decisions.
+- It's advisable to consider other splitting techniques before resorting to spikes, as they provide a more structured approach to dividing user stories.
+- Splitting user stories into smaller increments facilitates faster feedback loops, enabling timely testing, feedback, and improvements from stakeholders, customers, and the development team.
+- This approach enhances agility and allows for iterative development, ensuring that the final product meets user needs and expectations effectively.
