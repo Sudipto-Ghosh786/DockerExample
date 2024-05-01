@@ -27,3 +27,31 @@ const uploadFiles = (files) => {
 // Usage
 const files = [/* array of files selected via file input tag */];
 uploadFiles(files);
+
+
+
+
+
+
+
+
+
+
+
+from flask import Flask, request, jsonify
+import os
+
+app = Flask(__name__)
+
+UPLOAD_FOLDER = '/path/to/your/upload/folder'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    for file in request.files.values():
+        file.save(os.path.join(UPLOAD_FOLDER, file.filename))
+    return 'Files uploaded successfully', 200
+
+if __name__ == '__main__':
+    app.run(debug=True)
