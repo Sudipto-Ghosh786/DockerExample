@@ -1,0 +1,29 @@
+const uploadFiles = (files) => {
+  files.forEach((file, index) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const fileStream = reader.result;
+      fetch('http://your-flask-backend/upload', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/octet-stream',
+          'Content-Disposition': `attachment; filename=${file.name}`
+        },
+        body: fileStream
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(data => console.log(data))
+      .catch(error => console.error('There was an error!', error));
+    };
+    reader.readAsArrayBuffer(file);
+  });
+}
+
+// Usage
+const files = [/* array of files selected via file input tag */];
+uploadFiles(files);
