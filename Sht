@@ -1,0 +1,23 @@
+import React from 'react';
+import { Alert, Button, Container, Row, Col } from 'react-bootstrap';
+
+const NotificationListPage = () => {
+    return (
+        <Container className="mt-3">
+            <Row className="justify-content-center">
+                <Col md={8}>
+                    <Alert variant="info" className="d-flex flex-column align-items-start">
+                        <div className="mb-2">From: XYZ_PQR</div>
+                        <div className="mb-3">goalName/SubCategoryName</div>
+                        <div className="d-flex">
+                            <Button variant="success" className="mr-2">Success</Button>
+                            <Button variant="danger">Danger</Button>
+                        </div>
+                    </Alert>
+                </Col>
+            </Row>
+        </Container>
+    );
+};
+
+export default NotificationListPage;
