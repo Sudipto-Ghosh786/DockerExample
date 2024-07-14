@@ -1,57 +1,27 @@
-const uploadFiles = (files) => {
-  files.forEach((file, index) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      const fileStream = reader.result;
-      fetch('http://your-flask-backend/upload', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/octet-stream',
-          'Content-Disposition': `attachment; filename=${file.name}`
-        },
-        body: fileStream
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.text();
-      })
-      .then(data => console.log(data))
-      .catch(error => console.error('There was an error!', error));
-    };
-    reader.readAsArrayBuffer(file);
-  });
-}
+import requests
 
-// Usage
-const files = [/* array of files selected via file input tag */];
-uploadFiles(files);
+def download_swagger_json(swagger_hub_url, output_file):
+    try:
+        parts = swagger_hub_url.split('/')
+        user = parts[4]
+        api = parts[5]
+        version = parts[6]
+        
+        resolved_json_url = f"https://api.swaggerhub.com/apis/{user}/{api}/{version}?resolved=true"
+        
+        response = requests.get(resolved_json_url, headers={'Accept': 'application/json'})
 
+        if response.status_code == 200:
+            with open(output_file, 'w') as file:
+                file.write(response.text)
+            print(f"Swagger JSON downloaded: {output_file}")
+        else:
+            print(f"Unable to download: {response.status_code}")
+    
+    except Exception as e:
+        print(f"An error occurred: {e}")
 
-
-
-
-
-
-
-
-
-
-from flask import Flask, request, jsonify
-import os
-
-app = Flask(__name__)
-
-UPLOAD_FOLDER = '/path/to/your/upload/folder'
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    for file in request.files.values():
-        file.save(os.path.join(UPLOAD_FOLDER, file.filename))
-    return 'Files uploaded successfully', 200
-
-if __name__ == '__main__':
-    app.run(debug=True)
+# Example usage
+swagger_hub_url = 'https://app.swaggerhub.com/apis/RIANDARMAWAN785/E-Commerce_API/1.0.0'
+output_file = 'swagger.json'
+download_swagger_json(swagger_hub_url, output_file)
